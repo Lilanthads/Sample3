@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="form-horizontal" style="">
+
+                <div class="form-group">
+                    @Html.Label("User Name", new { @class = "control-label col-md-4" })
+                    <div class="col-md-6" style="">
+                        @Html.TextBox("userName", null,
+                       new { @required = "require",
+                           @style = "width:75%; background-color:yellow; ",
+                           @class = "form-control", placeholder = "User Name"
+                       })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Password", new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.Password("userPWD", null,
+                       new { @required = "require",
+                           @style = "width:75%; background-color:darkseagreen; ",
+                           @class = "form-control", placeholder = "password" })
+                    </div>
+                </div>    
+                
+                <div class="form-group">
+                    @Html.Label("userRole", new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.TextBox("userRole", null,
+                       new
+                       {
+                           @required = "require",
+                           @style = "width:75%; background-color:darkseagreen; ",
+                           @class = "form-control",
+                           placeholder = "user Role"
+                       })
+                    </div>
+                </div>                
+
+                <input type="submit" value="Login"  />
+            </div>
+
+           
+
+        </div>
+
+    </div>
+    
+}
+
+
+<script type="text/javascript">
+
+
+    function postLoginData() {
+
+        alert('postLoginData called');
+
+        var uname = document.getElementById('userName-Text').value;
+        var upwd = document.getElementById('userPWD-Text').value;
+
+        //var para = { userName: 'user1', pwd : 'abc' };
+        var para = { userName: uname, pwd: upwd };
+
+        $.ajax({
+            dataType: "json",
+            contentType: "application/json",
+            type: 'POST',
+            url: "/MyLogin/Login",
+            data: JSON.stringify(para)
+
+        }).done(
+                function (d) {
+                   
+                }
+        );
+    }
+
+</script>
+

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+
+    <div class="row" style="background-color:#766a4f;">
+        <div class="col-md-12" style="position:fixed; top:0px; height: 50px; background-color:#766a4f;">
+            
+         
+
+            <br />
+
+        </div>
+    </div>
+
+    <div class="row" style="background-color:#e7ebf3;">
+        <div class="col-md-2" style="background-color:#afafb4; height:600px;">
+            <p> This is nav</p>
+
+            <ul class="">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Items", "Index", "Items")</li>
+                <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                <li>@Html.ActionLink("Invoice List", "Index", "Invoices")</li>
+                <li>@Html.ActionLink("New Invoice", "Create", "Invoices")</li>
+                
+            </ul>
+
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <p>
+                        @User.Identity.Name.ToString()
+                    </p>
+                            @Html.ActionLink("LogOff", "Logoff", "MyLogin")
+                }
+            }
+            
+        </div>
+        <div class="col-md-9" style="background-color:#bdc3c8;">
+            @RenderBody()
+        </div>
+        <div class="col-md-1" style="background-color:#e6f0f2;">
+            <p> This is margin</p>
+        </div>
+
+    </div>
+
+    <div class="row" style="background-color:#808080;">
+        <div class="col-md-12">
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My Edited Layout</p>
+            </footer>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

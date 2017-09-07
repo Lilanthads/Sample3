@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Login1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login1</h2>
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="form-horizontal">
+                
+                <div class="form-group">
+                    
+                    @Html.Label("userName", "User Name", new { @class = "control-label col-md-4" })
+                    
+                    <div class="col-md-6" style="">
+                        @Html.TextBox("userName", null,
+                       new
+                       {
+                           @required = "require",
+                           @style = "width:75%; background-color:yellow; ",
+                           @class = "form-control",
+                           placeholder = "Enter user Name"
+                       })
+                    </div>
+                </div>
+             
+
+                <div class="form-group">
+
+                    @Html.Label("userRole", "Role", new { @class = "control-label col-md-4" })
+
+                    <div class="col-md-6" style="">
+                        @Html.TextBox("userRole", null,
+                       new
+                       {
+                           @required = "require",
+                           @style = "width:75%; ",
+                           @class = "form-control",
+                           placeholder = "Role name"
+                       })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+
+                    @Html.Label("userPWD", "Password", new { @class = "control-label col-md-4" })
+
+                    <div class="col-md-6" style="">
+                        @Html.Password("userPWD", null,
+                       new
+                       {
+                           @required = "require",
+                           @style = "width:75%; ",
+                           @class = "form-control",
+                           placeholder = "password"
+                       })
+                    </div>
+
+                    <input class="" type="submit" value="Login" />
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+
+}
+

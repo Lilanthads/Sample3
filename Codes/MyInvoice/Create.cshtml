@@ -1,0 +1,299 @@
+﻿
+@model IJSE.POS.Common.Models.Invoice
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Invoice</h2>
+
+
+
+@using (Html.BeginForm())
+{
+    <!--Row 1-->
+    <div class="row">
+
+        <!--Invoice-->
+        <div class="col-md-6">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CustomerID, "Customer ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DropDownList("CustomerID", null,"-", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group ">                   
+                    @Html.Label("customerAddress-label", "Label 1", new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">                        
+                        @Html.TextBox("text1", null, new { @required = "require",  @style = "width:75%; background-color:darkseagreen; ",  @class = "form-control", placeholder = "Address"  })
+                    </div>
+
+                </div>
+
+            </div>
+
+            </div>
+
+        <!--Customer-->
+        <div class="col-md-6 pull-right">
+            <label for="customerName">Customer Name </label>
+            <select class="form-control" id="customerName"></select>
+            <input type="button" value="load" onclick="loadCustomerNames();" />
+
+            <button type="button"  data-toggle="modal" data-target="#customerSearchModel">Search Customer</button>
+
+            <br />
+            <label for="customerAddress">Address </label>
+            <input class="form-control" type="text" id="customerAddress" />
+
+            <label for="creditLimit">Credit Limit </label>
+            <input class="form-control" type="text" id="creditLimit" onblur="alert('aaa');" />
+
+            <br />
+        </div>
+
+    </div>
+
+    <!--Row 2-->
+    <div class="row">
+
+        <div class="form-group">
+            @Html.Label("Item Price", new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.TextBox("itemPrice", null,
+                       new
+                       {
+                           @required = "require",
+                           @style = "width:75%; background-color:darkseagreen; ",
+                           @class = "form-control",
+                           placeholder = ""
+                       })
+            </div>
+        </div> 
+        
+        <div class="form-group">
+            @Html.Label("QTY", new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.TextBox("itemQuantity", null,
+                       new
+                       {
+                           @required = "require",
+                           @style = "width:75%; background-color:darkseagreen; ",
+                           @class = "form-control",
+                           placeholder = "Quantity"
+                       })
+            </div>
+        </div>    
+
+
+        <input type="button" value="load Items" onclick="loadItemlist();" />
+
+    </div>
+
+    <!--Row 3-->
+    <div class="row">
+        <div class="col-md-10" id="Itemtable-div"
+             style="height:250px; background-color:#f7f3de;
+            overflow-y: scroll;">
+
+        </div>
+    </div>
+    
+
+    <!--Row 4-->
+    <div class="row">
+
+    </div>
+
+
+    <!-- Modal -->
+    <div id="customerSearchModel" class="modal fade" role="dialog">
+        <div class=" modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Search : Customer</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="customerName">Customer Name </label>
+                        <input class="form-control"
+                                type="text" id="customerSearchModel-customerNamepart"
+                                onchange="" />
+                        <input type="button" value="Search" onclick="customerSearch();" />
+                    </div>
+
+                   <div id="customerSearchModel-customerTable"
+                         style="height:300px; overflow-y: scroll;">
+                   </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="customerSearchModelX" class="modal fade" role="dialog">
+        <div class=" modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Search : Customer</h4>                    
+                </div>
+
+                <div class="modal-body">
+                    
+                    <div class="form-group">
+                        <label for="customerName">Customer Name </label>
+                        <select class="form-control" id="customerNameModel"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerAddress">Address </label>
+                        <input class="form-control" type="text" id="customerAddressModel" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="creditLimit">Credit Limit </label>
+                        <input class="form-control" type="text" id="creditLimitModel" onblur="" />
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" >Select</button>
+                    <button type="button"  data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--- 
+        ....
+        -->
+
+
+
+}
+
+
+
+<script type="text/javascript">
+
+
+    function customerSearch()
+    {
+        var searchNamePart = document.
+            getElementById('customerSearchModel-customerNamepart').value;
+     $('#customerSearchModel-customerTable').load('/Customers/SearchByName',
+            { namePart: searchNamePart });
+
+    }
+
+
+    function loadCustomerNames() {
+
+        alert('loadCustomerNames called');
+
+        var para = { id: '' };
+
+        $.ajax({
+            dataType: "json",
+            contentType: "application/json",
+            type: 'POST',
+            url: "/Customers/GetList",
+            data: JSON.stringify(para)
+
+        }).done(
+                function (d) {
+                    for (var i = 0; i < d.length; i++) {
+
+                        var option = document.createElement("option"); //add option to select box
+           document.getElementById('customerName').options.add(option);
+                        option.text = d[i].Name;
+                        option.value = d[i].Name;
+                    }
+                }
+        );
+    }
+
+
+    function loadCustomerNames2() {
+
+        var para = { id: '' };
+        $.getJSON("/Customers/GetList", para).done(
+            function (d) {
+                for (var i = 0; i < d.length; i++) {
+                    var option = document.createElement("option"); //add option to select box
+                    document.getElementById('cmbCustomerName').options.add(option);
+                    option.text = d[i].Name;
+                    option.value = d[i].Name;
+                }
+
+            }
+        );
+    }
+
+
+    function loadItemlist() {
+        alert('load url');
+         $('#Itemtable-div').load('/MyInvoice/GetInvoiceItems');
+       // $('#Itemtable-div').load('/Customers/Index');
+
+    }
+
+
+
+    function AddItem() {
+
+        alert('add Item called');
+        var itmId = document.getElementById('').value;        
+        var itmprice = document.getElementById('').value;
+        var itmqty = document.getElementById('').value;
+
+        var cmb = document.getElementById('');  // get the cmb/list 
+        var itmName = cmb.options[cmb.selectedIndex].text;  // get the cmb selected 
+
+        var para = {
+            itemId: itmId, itemName: itmName,
+            price: itmprice, qty: itmqty
+        };   
+
+        $.ajax({
+            dataType: "json",
+            contentType: "application/json",
+            type: 'POST',
+            url: "/Invoice/AddInvoiceItem",
+            data: JSON.stringify(para)
+
+        }).done(
+                function (d) {
+                    // call Invoice controler and get the updated view/html for the div
+                    $('#Itemtable-div').
+                        load('/Invoice/GetInvoiceItems');
+                }
+        );
+    }
+
+</script>
+
+
+

@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using Microsoft.Azure;
+
+
+namespace Common
+{
+    public class AppSettings : IAppSettings, IConfigSettings
+    {
+        public string LocationServiceKey
+            {
+            get { return Get("locationService.keyname"); }
+            }
+
+        public string LocationServiceToken
+        {
+            get { return Get("locationService.sharedSecret"); }
+            }
+
+        }
+
+        string IAppSettings.Get(string applicationSettingValues)
+        {
+            return this.Get(applicationSettingValues);
+        }
+
+        
+
+        public decimal GstPercentage
+        {
+            get
+            {
+                decimal result = 0;
+                decimal.TryParse(Get("GstPercentage"), out result);
+                return result;
+            }
+        }
+
+       
+    }
+}
